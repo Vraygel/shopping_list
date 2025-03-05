@@ -45,12 +45,21 @@ function App() {
   };
 
   const handleInputBlur = () => {
-    if (inputValue.trim() !== '') {
-      setShoppingList([...shoppingList, { text: inputValue }]);
-      setInputValue('');
-    }
-    setShowInput(false);
+    addItem();
+    setShowInput(false)
   };
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            addItem();
+        }
+    };
+
+  const addItem = () => {
+      if (inputValue.trim() !== '') {
+          setShoppingList([...shoppingList, { text: inputValue}]);
+          setInputValue('');
+      }
+  }
 
   const deleteElement = (index) => {
     setShoppingList(shoppingList.filter((item, i) => i !== index));
@@ -93,17 +102,21 @@ function App() {
   };
 
   const openChat = (contact) => {
+    const message = shoppingList
+      .map((item) => `• ${item.text}`)
+      .join('%0A');
+
     if (contact.type === 'telegram') {
       const telegramUsername = contact.text.startsWith('@')
         ? contact.text.substring(1)
         : contact.text;
-      window.open(`https://t.me/${telegramUsername}`, '_blank');
+      window.open(`https://t.me/${telegramUsername}?text=${message}`, '_blank');
     } else if (contact.type === 'whatsapp') {
-      window.open(`https://wa.me/${contact.text}`, '_blank');
+      window.open(`https://wa.me/${contact.text}?text=${message}`, '_blank');
     }
+    handleCloseModal();
   };
-  
-   const handleDragStart = (event, index) => {
+  const handleDragStart = (event, index) => {
     draggedItem.current = index;
     event.dataTransfer.effectAllowed = 'move';
   };
@@ -120,7 +133,6 @@ function App() {
     draggedOverItem.current = null;
     setShoppingList(shoppingListCopy);
   };
-
   return (
     <div className="app-container">
       <button onClick={handleShowInput} className="add-new-button">
@@ -134,6 +146,7 @@ function App() {
             value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
+            onKeyDown={handleKeyDown}
             placeholder="Добавить товар"
             className="input-field"
           />
