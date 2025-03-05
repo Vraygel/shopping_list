@@ -1,0 +1,201 @@
+.modal {
+  position: fixed; /* Фиксированное позиционирование */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  width: 400px;
+  max-width: 90%;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.modal-input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-input-field {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #7fcdcd;
+  border-radius: 5px;
+  margin-right: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
+}
+
+.modal-input-field:focus {
+  border-color: #457b9d;
+  outline: none;
+  box-shadow: 0px 0px 0px 3px #7fcdcd;
+  border-radius: 5px;
+}
+
+.modal-add-button {
+  padding: 10px;
+  background-color: #a8dadc; /* Бирюзовый */
+  color: #264653; /* Темно-зеленый */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-add-button:hover {
+  background-color: #7fcdcd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #e8f5e9;
+  cursor: pointer;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-delete-button {
+  background-color: #f2e9e4; /* Почти белый */
+  color: #264653; /* Темно-зеленый */
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-delete-button:hover {
+  background-color: #d0d0d0;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+}
+.switch {
+  --w-switch: 100px;
+  --h-switch: calc((var(--w-switch) / 3));
+  --inset-switch: calc(var(--w-switch) * (3.75 / 100));
+  --clr-on: #27ae60;
+  --clr-off: #457b9d;
+  --shadow-sz: calc(var(--w-switch) * (1.2 / 100));
+  width: var(--w-switch);
+  height: var(--h-switch);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d0d0d0;
+  margin: 0px auto;
+  position: relative;
+  border-radius: 9999px;
+  box-shadow: inset 0px var(--shadow-sz) var(--shadow-sz) rgba(0, 0, 0, 0.5),
+    0px var(--shadow-sz) var(--shadow-sz) rgba(255, 255, 255, 0.2),
+    0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.switch::before,
+.switch::after {
+  --sh-i: calc(var(--w-switch) * (0.8 / 100));
+  --sh-o: calc((var(--w-switch) * (0.8 / 100)) * -1);
+  position: absolute;
+  z-index: 0;
+  font-size: calc(var(--w-switch) * (12 / 100));
+  line-height: 1.5;
+  font-weight: bold;
+  text-shadow: 0 var(--sh-o) var(--sh-i) #4e4e4e,
+    var(--sh-o) 0 var(--sh-i) #4e4e4e,
+    var(--sh-o) var(--sh-o) var(--sh-i) #4e4e4e,
+    var(--sh-i) var(--sh-o) var(--sh-i) #1d1d1d,
+    0 var(--sh-i) var(--sh-i) #111111,
+    var(--sh-o) var(--sh-i) var(--sh-i) #111111,
+    var(--sh-i) var(--sh-i) var(--sh-i) #000000,
+    var(--sh-i) 0 var(--sh-i) #000000;
+}
+
+.switch::before {
+  content: 'WP';
+  color: #27ae60;
+  left: 12.5%;
+}
+
+.switch::after {
+  content: 'Tel';
+  color: #457b9d;
+  right: 12.5%;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  display: none;
+  visibility: hidden;
+}
+
+.slider {
+  display: block;
+  width: calc((var(--w-switch) / 2) - (var(--inset-switch) * 2));
+  height: calc(100% - (var(--inset-switch) * 2));
+  cursor: pointer;
+  position: absolute;
+  left: var(--inset-switch);
+  z-index: 1;
+  margin-bottom: -1px;
+  background: #ffffff;
+  border-radius: 9999px;
+  transition: all 0.4s ease;
+  box-shadow: inset 0 -2px 10px 1px rgba(100, 100, 100),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.3), 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slider::after {
+  content: '';
+  --sz-bump: calc(
+    100% - ((var(--w-switch) * (10 / 100)) + (var(--inset-switch) / 2))
+  );
+  width: var(--sz-bump);
+  height: var(--sz-bump);
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  background: #457b9d;
+  border-radius: 50px;
+  transition: all 0.4s ease;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0), 0px 1px 0px rgba(255, 255, 255, 0.9);
+}
+
+.switch input[type='checkbox']:checked + .slider {
+  left: calc((var(--w-switch) / 2) + var(--inset-switch));
+}
+
+.switch input[type='checkbox']:checked + .slider::after {
+  background: #27ae60;
+}
+

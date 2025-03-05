@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import './App.css';
+import AddItem from './components/AddItem';
+import ShoppingList from './components/ShoppingList';
+import SendButton from './components/SendButton';
+import ModalContacts from './components/ModalContacts';
+import HelpButton from './components/HelpButton';
 
 function App() {
-  const [showInput, setShowInput] = useState(false);
-  const [inputValue, setInputValue] = useState('');
   const [shoppingList, setShoppingList] = useState(() => {
     const saved = localStorage.getItem('shoppingList');
     const initialValue = JSON.parse(saved);
@@ -17,15 +20,8 @@ function App() {
   });
   const [contactInput, setContactInput] = useState('');
   const [contactType, setContactType] = useState('whatsapp'); // По умолчанию WhatsApp
-  const inputRef = useRef(null);
   const draggedItem = useRef(null);
   const draggedOverItem = useRef(null);
-
-  useEffect(() => {
-    if (showInput && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [showInput]);
 
   useEffect(() => {
     localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
@@ -35,31 +31,9 @@ function App() {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  const handleShowInput = () => {
-    setShowInput(true);
-    setInputValue('');
+  const handleAddItem = (inputValue) => {
+    setShoppingList([...shoppingList, { text: inputValue }]);
   };
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleInputBlur = () => {
-    addItem();
-    setShowInput(false)
-  };
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            addItem();
-        }
-    };
-
-  const addItem = () => {
-      if (inputValue.trim() !== '') {
-          setShoppingList([...shoppingList, { text: inputValue}]);
-          setInputValue('');
-      }
-  }
 
   const deleteElement = (index) => {
     setShoppingList(shoppingList.filter((item, i) => i !== index));
@@ -102,9 +76,7 @@ function App() {
   };
 
   const openChat = (contact) => {
-    const message = shoppingList
-      .map((item) => `• ${item.text}`)
-      .join('%0A');
+    const message = shoppingList.map((item) => `• ${item.text}`).join('%0A');
 
     if (contact.type === 'telegram') {
       const telegramUsername = contact.text.startsWith('@')
@@ -116,6 +88,7 @@ function App() {
     }
     handleCloseModal();
   };
+
   const handleDragStart = (event, index) => {
     draggedItem.current = index;
     event.dataTransfer.effectAllowed = 'move';
@@ -133,117 +106,35 @@ function App() {
     draggedOverItem.current = null;
     setShoppingList(shoppingListCopy);
   };
+
   return (
     <div className="app-container">
-      <button onClick={handleShowInput} className="add-new-button">
-        Новый элемент
-      </button>
-      {showInput && (
-        <div className="input-container">
-          <input
-            ref={inputRef}
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            onKeyDown={handleKeyDown}
-            placeholder="Добавить товар"
-            className="input-field"
-          />
-        </div>
-      )}
-
-      <ul className="shopping-list">
-        {shoppingList.map((item, index) => (
-          <li
-            key={index}
-            className="shopping-item"
-            draggable
-            onDragStart={(event) => handleDragStart(event, index)}
-            onDragEnter={(event) => handleDragEnter(event, index)}
-            onDragEnd={handleDragEnd}
-            onDragOver={(event) => event.preventDefault()}
-          >
-            <span>{index + 1}.</span>
-            <input
-              type="text"
-              value={item.text}
-              onChange={(event) => handleEditChange(index, event)}
-              className="edit-input"
-            />
-            <button className="delete-button" onClick={() => deleteElement(index)}>
-              Удалить
-            </button>
-          </li>
-        ))}
-      </ul>
+      <HelpButton/>
+      <AddItem onAddItem={handleAddItem} />
+      <ShoppingList
+        shoppingList={shoppingList}
+        onDeleteItem={deleteElement}
+        onEditItem={handleEditChange}
+        handleDragStart={handleDragStart}
+        handleDragEnter={handleDragEnter}
+        handleDragEnd={handleDragEnd}
+      />
       <p className="local-storage-info">
         Список покупок сохраняется в памяти вашего браузера.
       </p>
-      {shoppingList.length > 0 && (
-        <button onClick={handleShowModal} className="send-button">
-          Отправить
-        </button>
-      )}
-
+      {shoppingList.length > 0 && <SendButton onSend={handleShowModal} />}
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close-button" onClick={handleCloseModal}>
-              &times;
-            </span>
-            <h2>Список контактов</h2>
-            <div className="modal-input-container">
-              <input
-                type="text"
-                value={contactInput}
-                onChange={handleContactChange}
-                placeholder="Введите данные контакта"
-                className="modal-input-field"
-              />
-              <button className="modal-add-button" onClick={handleAddContact}>
-                +
-              </button>
-            </div>
-            <div className="switch">
-              <input
-                checked={contactType === 'whatsapp'}
-                name="check"
-                id="switchBox"
-                type="checkbox"
-                onChange={handleContactTypeChange}
-              />
-              <label className="slider" htmlFor="switchBox"></label>
-            </div>
-            <p className="modal-info">
-              Введите номер телефона или логин Telegram
-            </p>
-            <ul className="contact-list">
-              {contacts.map((contact, index) => (
-                <li
-                  key={index}
-                  className="contact-item"
-                  onClick={() => openChat(contact)}
-                >
-                  {contact.text} ({contact.type})
-                  <button
-                    className="contact-delete-button"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      deleteContact(index);
-                    }}
-                  >
-                    Удалить
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <p className="local-storage-info">
-              Контакты сохраняются только в памяти вашего браузера. Они будут
-              недоступны на других устройствах.
-            </p>
-          </div>
-        </div>
+        <ModalContacts
+          contacts={contacts}
+          contactInput={contactInput}
+          contactType={contactType}
+          onContactChange={handleContactChange}
+          onContactTypeChange={handleContactTypeChange}
+          onAddContact={handleAddContact}
+          onDeleteContact={deleteContact}
+          onOpenChat={openChat}
+          onCloseModal={handleCloseModal}
+        />
       )}
     </div>
   );

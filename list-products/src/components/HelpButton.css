@@ -1,0 +1,26 @@
+.help-container {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+}
+
+.help-button {
+		background-color: #a8dadc; /* Бирюзовый */
+		color: #264653; /* Темно-зеленый */
+		border: none;
+		border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		font-size: 1.2rem;
+		cursor: pointer;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+		transition: background-color 0.3s ease, box-shadow 0.3s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+}
+
+.help-button:hover {
+		background-color: #7fcdcd; /* Более насыщенный бирюзовый */
+		box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Тень при наведении */
+}
