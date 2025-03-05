@@ -5,9 +5,9 @@ function App() {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [shoppingList, setShoppingList] = useState(() => {
-      const saved = localStorage.getItem('shoppingList');
-      const initialValue = JSON.parse(saved);
-      return initialValue || [];
+    const saved = localStorage.getItem('shoppingList');
+    const initialValue = JSON.parse(saved);
+    return initialValue || [];
   });
   const [showModal, setShowModal] = useState(false);
   const [contacts, setContacts] = useState(() => {
@@ -18,6 +18,8 @@ function App() {
   const [contactInput, setContactInput] = useState('');
   const [contactType, setContactType] = useState('whatsapp'); // По умолчанию WhatsApp
   const inputRef = useRef(null);
+  const draggedItem = useRef(null);
+  const draggedOverItem = useRef(null);
 
   useEffect(() => {
     if (showInput && inputRef.current) {
@@ -26,7 +28,7 @@ function App() {
   }, [showInput]);
 
   useEffect(() => {
-      localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
+    localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
   }, [shoppingList]);
 
   useEffect(() => {
@@ -100,6 +102,24 @@ function App() {
       window.open(`https://wa.me/${contact.text}`, '_blank');
     }
   };
+  
+   const handleDragStart = (event, index) => {
+    draggedItem.current = index;
+    event.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragEnter = (event, index) => {
+    draggedOverItem.current = index;
+  };
+
+  const handleDragEnd = () => {
+    const shoppingListCopy = [...shoppingList];
+    const draggedItemContent = shoppingListCopy.splice(draggedItem.current, 1)[0];
+    shoppingListCopy.splice(draggedOverItem.current, 0, draggedItemContent);
+    draggedItem.current = null;
+    draggedOverItem.current = null;
+    setShoppingList(shoppingListCopy);
+  };
 
   return (
     <div className="app-container">
@@ -122,7 +142,15 @@ function App() {
 
       <ul className="shopping-list">
         {shoppingList.map((item, index) => (
-          <li key={index} className="shopping-item">
+          <li
+            key={index}
+            className="shopping-item"
+            draggable
+            onDragStart={(event) => handleDragStart(event, index)}
+            onDragEnter={(event) => handleDragEnter(event, index)}
+            onDragEnd={handleDragEnd}
+            onDragOver={(event) => event.preventDefault()}
+          >
             <span>{index + 1}.</span>
             <input
               type="text"
@@ -136,7 +164,9 @@ function App() {
           </li>
         ))}
       </ul>
-        <p className="local-storage-info">Список покупок сохраняется в памяти вашего браузера.</p>
+      <p className="local-storage-info">
+        Список покупок сохраняется в памяти вашего браузера.
+      </p>
       {shoppingList.length > 0 && (
         <button onClick={handleShowModal} className="send-button">
           Отправить
@@ -195,7 +225,10 @@ function App() {
                 </li>
               ))}
             </ul>
-              <p className="local-storage-info">Контакты сохраняются только в памяти вашего браузера. Они будут недоступны на других устройствах.</p>
+            <p className="local-storage-info">
+              Контакты сохраняются только в памяти вашего браузера. Они будут
+              недоступны на других устройствах.
+            </p>
           </div>
         </div>
       )}
