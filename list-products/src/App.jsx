@@ -106,18 +106,26 @@ function App() {
     draggedOverItem.current = null;
     setShoppingList(shoppingListCopy);
   };
+    
+  const handleClearList = () => {
+    setShoppingList([]);
+    localStorage.removeItem('shoppingList');
+  };
 
   return (
     <div className="app-container">
-      <HelpButton/>
+        <div className="app-buttons-container">
+            <button className="clear-list-button" onClick={handleClearList}>Удалить список</button> {/* Перемещено */}
+            <HelpButton/> {/* Перемещено */}
+        </div>
       <AddItem onAddItem={handleAddItem} />
       <ShoppingList
         shoppingList={shoppingList}
         onDeleteItem={deleteElement}
         onEditItem={handleEditChange}
-        handleDragStart={handleDragStart} // Добавлено
-        handleDragEnter={handleDragEnter} // Добавлено
-        handleDragEnd={handleDragEnd} // Добавлено
+        handleDragStart={handleDragStart}
+        handleDragEnter={handleDragEnter}
+        handleDragEnd={handleDragEnd}
       />
       <p className="local-storage-info">
         Список покупок сохраняется в памяти вашего браузера.

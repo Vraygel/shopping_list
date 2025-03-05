@@ -15,6 +15,13 @@
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Тень */
 }
+.app-buttons-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
 
 .local-storage-info {
   font-size: 0.8rem;
@@ -24,6 +31,22 @@
   position: absolute;
   bottom: -4rem;
   width: 100%;
+}
+
+.clear-list-button{
+    margin-right: 1rem;
+    padding: 10px 20px;
+    background-color: #f2e9e4; /* Почти белый */
+    color: #264653; /* Темно-зеленый */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Плавные изменения */
+}
+.clear-list-button:hover {
+	background-color: #d0d0d0;
+	box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); /* Тень при наведении */
 }
 
 @media (max-width: 480px) {

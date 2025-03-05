@@ -14,7 +14,7 @@ function HelpButton() {
 	};
 
 	return (
-		<div className="help-container">
+		<div className="help-container"> {/*Удален*/}
 			<button
 				className="help-button"
 				onClick={handleOpenModal}
