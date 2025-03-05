@@ -198,4 +198,3 @@
 .switch input[type='checkbox']:checked + .slider::after {
   background: #27ae60;
 }
-

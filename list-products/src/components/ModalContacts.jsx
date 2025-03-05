@@ -1,3 +1,5 @@
+import './ModalContacts.css'
+
 import React from 'react';
 function ModalContacts({
 	contacts,

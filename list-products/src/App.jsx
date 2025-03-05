@@ -115,9 +115,9 @@ function App() {
         shoppingList={shoppingList}
         onDeleteItem={deleteElement}
         onEditItem={handleEditChange}
-        handleDragStart={handleDragStart}
-        handleDragEnter={handleDragEnter}
-        handleDragEnd={handleDragEnd}
+        handleDragStart={handleDragStart} // Добавлено
+        handleDragEnter={handleDragEnter} // Добавлено
+        handleDragEnd={handleDragEnd} // Добавлено
       />
       <p className="local-storage-info">
         Список покупок сохраняется в памяти вашего браузера.
