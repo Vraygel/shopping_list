@@ -19,6 +19,7 @@ function ModalContacts({
 					&times;
 				</span>
 				<h2>Список контактов</h2>
+				<p className="modal-info">Введите номер телефона или логин Telegram</p>
 				<div className="modal-input-container">
 					<input
 						type="text"
@@ -41,7 +42,6 @@ function ModalContacts({
 					/>
 					<label className="slider" htmlFor="switchBox"></label>
 				</div>
-				<p className="modal-info">Введите номер телефона или логин Telegram</p>
 				<ul className="contact-list">
 					{contacts.map((contact, index) => (
 						<li

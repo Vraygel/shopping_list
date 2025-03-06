@@ -32,7 +32,7 @@ function App() {
   }, [contacts]);
 
   const handleAddItem = (inputValue) => {
-    setShoppingList([...shoppingList, { text: inputValue }]);
+    setShoppingList([...shoppingList, { text: inputValue, checked: false }]); // Добавлено
   };
 
   const deleteElement = (index) => {
@@ -106,18 +106,34 @@ function App() {
     draggedOverItem.current = null;
     setShoppingList(shoppingListCopy);
   };
-    
+
   const handleClearList = () => {
     setShoppingList([]);
     localStorage.removeItem('shoppingList');
   };
 
+  const handleCheckboxChange = (index, event) => {
+    const updatedList = shoppingList.map((item, i) =>
+      i === index ? { ...item, checked: event.target.checked } : item
+    );
+
+    const checkedItem = updatedList[index]; // Получаем элемент, который был изменен
+    const filteredList = updatedList.filter((item,i)=> i!== index); // Фильтруем элемент, который был изменен
+    if (checkedItem.checked){ // Если элемент отмечен, то добавляем его в конец
+        setShoppingList([...filteredList, checkedItem]);
+    } else{ // Если не отмечен, то добавляем его в массив на то же место.
+        setShoppingList(updatedList)
+    }
+  };
+
   return (
     <div className="app-container">
-        <div className="app-buttons-container">
-            <button className="clear-list-button" onClick={handleClearList}>Очистить список</button> {/* Перемещено */}
-            <HelpButton/> {/* Перемещено */}
-        </div>
+      <div className="app-buttons-container">
+        <button className="clear-list-button" onClick={handleClearList}>
+          Удалить список
+        </button>
+        <HelpButton />
+      </div>
       <AddItem onAddItem={handleAddItem} />
       <ShoppingList
         shoppingList={shoppingList}
@@ -126,9 +142,10 @@ function App() {
         handleDragStart={handleDragStart}
         handleDragEnter={handleDragEnter}
         handleDragEnd={handleDragEnd}
+        onCheckboxChange={handleCheckboxChange} // Добавлено
       />
       <p className="local-storage-info">
-        Список покупок сохраняется в памяти вашего браузера. Он будет недоступен на других устройствах.
+        Список покупок сохраняется только в памяти вашего браузера. Он будет недоступен на другом устройстве.
       </p>
       {shoppingList.length > 0 && <SendButton onSend={handleShowModal} />}
       {showModal && (
