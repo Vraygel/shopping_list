@@ -37,12 +37,12 @@ function AddItem({ onAddItem }) {
 				}
 		};
 	return (
-		<div>
+		<div className="input-container">
 			<button onClick={handleShowInput} className="add-new-button">
 				Новый элемент
 			</button>
 			{showInput && (
-				<div className="input-container">
+				<div>
 					<input
 						ref={inputRef}
 						type="text"

@@ -4,7 +4,7 @@ import './SendButton.css'
 function SendButton({ onSend }) {
 	return (
 		<button onClick={onSend} className="send-button">
-			Отправить
+			Поделиться
 		</button>
 	);
 }

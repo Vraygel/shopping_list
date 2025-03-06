@@ -14,9 +14,11 @@
 	background-color: #7fcdcd; /* Более насыщенный бирюзовый */
 	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Тень при наведении */
 }
+
 .input-container {
 	margin-bottom: 1rem;
 	width: 100%;
+	/* width: 720px; */
 }
 
 .input-field {

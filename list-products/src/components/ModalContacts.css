@@ -129,14 +129,10 @@
   font-size: calc(var(--w-switch) * (12 / 100));
   line-height: 1.5;
   font-weight: bold;
-  text-shadow: 0 var(--sh-o) var(--sh-i) #4e4e4e,
-    var(--sh-o) 0 var(--sh-i) #4e4e4e,
-    var(--sh-o) var(--sh-o) var(--sh-i) #4e4e4e,
-    var(--sh-i) var(--sh-o) var(--sh-i) #1d1d1d,
-    0 var(--sh-i) var(--sh-i) #111111,
-    var(--sh-o) var(--sh-i) var(--sh-i) #111111,
-    var(--sh-i) var(--sh-i) var(--sh-i) #000000,
-    var(--sh-i) 0 var(--sh-i) #000000;
+  text-shadow: 0px 1px white,
+  1px 0px white,
+  -1px 0px white,
+  0px -1px white;
 }
 
 .switch::before {

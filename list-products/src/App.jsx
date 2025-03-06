@@ -115,7 +115,7 @@ function App() {
   return (
     <div className="app-container">
         <div className="app-buttons-container">
-            <button className="clear-list-button" onClick={handleClearList}>Удалить список</button> {/* Перемещено */}
+            <button className="clear-list-button" onClick={handleClearList}>Очистить список</button> {/* Перемещено */}
             <HelpButton/> {/* Перемещено */}
         </div>
       <AddItem onAddItem={handleAddItem} />
@@ -128,7 +128,7 @@ function App() {
         handleDragEnd={handleDragEnd}
       />
       <p className="local-storage-info">
-        Список покупок сохраняется в памяти вашего браузера.
+        Список покупок сохраняется в памяти вашего браузера. Он будет недоступен на других устройствах.
       </p>
       {shoppingList.length > 0 && <SendButton onSend={handleShowModal} />}
       {showModal && (
